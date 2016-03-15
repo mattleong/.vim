@@ -1,0 +1,8 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =6
+let g:netrw_dirhist_1='/Users/mattleong'
+let g:netrw_dirhist_2='/Users/mattleong/Dev'
+let g:netrw_dirhist_3='/Users/mattleong/Dev/ces'
+let g:netrw_dirhist_4='/Users/mattleong/Dev/ces/ford'
+let g:netrw_dirhist_5='/Users/mattleong/Dev/ces/ford/cc'
+let g:netrw_dirhist_6='/Users/mattleong/Dev/ad code demos/dtads-custom-template'
