@@ -2,17 +2,42 @@
 syntax on
 set number
 set autoindent
+set smartindent
+
 set expandtab
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 set tabstop=4
-set wildmenu
+set wrap
+set backspace=eol,start,indent
+
 set mouse=a
+
+set relativenumber
+set wildmenu
+set ruler
 set noswapfile
 set hidden
 
+set t_Co=256
+set term=screen-256color
+
+set autoread
+
+"map space to search
+map <space> /
+set incsearch
+
+map 0 ^
+
+"buffer control
+map <C-j> :bp<cr>
+map <C-k> :bp<cr>
+
 let mapleader = ","
+
+inoremap jj <ESC><CR>
 
 " Vundle
 set nocompatible
@@ -22,14 +47,12 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'scwood/vim-hybrid'
 Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/nerdcommenter'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'kien/ctrlp.vim'
-Plugin 'ack.vim'
 Plugin 'bling/vim-airline'
 Plugin 'L9'
-Plugin 'vim-airline/vim-airline-themes'
 Plugin 'tpope/vim-surround'
 Plugin 'raimondi/delimitmate'
 Plugin 'ap/vim-css-color'
@@ -40,15 +63,21 @@ Plugin 'pangloss/vim-javascript'
 Plugin 'shawncplus/phpcomplete.vim'
 Plugin 'Shougo/vimproc'
 Plugin 'Shougo/unite.vim'
-Plugin 'm2mdas/phpcomplete-extended'
 Plugin 'supertab'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'tpope/vim-fugitive'
-Plugin 'scrooloose/nerdcommenter'
-" Plugin 'Shougo/neocomplete'
+Plugin 'rking/ag.vim'
+Plugin 'chriskempson/base16-vim'
+Plugin 'ternjs/tern_for_vim'
 
 call vundle#end()
 filetype plugin indent on
+
+" Ag
+let g:ag_prg='ag --column --ignore /wp-content/themes/digitaltrends-2014/assets/styles/css/'
+
+" YCM Python
+let g:ycm_python_binary_path = '/usr/local/bin/python3'
 
 " Php Auto Complete Extended
 " SuperTab
@@ -60,25 +89,32 @@ let g:SuperTabDefaultCompletetionType = "<c-x><c-o>"
 
 " NERDTree
 " Autoopen
-autocmd vimenter * NERDTree
+" autocmd vimenter * NERDTree
 let NERDTreeShowHidden=1
 "CTRL-n
 map <C-n> :NERDTreeToggle<CR>
 
+" Unite mapping
+nnoremap <C-m> :Unite -quick-match buffer<cr>
+
 " CtrlP remapping for dt
 noremap <C-a> :CtrlP<CR>
-let g:ctrlp_cmd=':CtrlP ~/Dev/dt_local/docker/projects/dt/web/digitaltrends/current/wp-content/themes/'
+let g:ctrlp_cmd=':CtrlP ~/Dev/dt_local/docker/projects/dt/web/digitaltrends/current/wp-content/themes'
+let g:ctrlp_show_hidden=1
 
 " Remove trailing whitespaces
 autocmd BufWritePre * :%s/\s\+$//e
 
-" Theme
-colorscheme hybrid
-set background=dark
-set runtimepath^=~/.vim/bundle/ag
+let g:phpcomplete_index_composer_command='/usr/local/bin/composer'
 
-" Reload files changed outside of vim
-set autoread
+" Theme
+colorscheme base16-default
+let base16colorspace=256
+" let g:solarized_termcolors=256
+set background=dark
+
+" Ag
+set runtimepath^=~/.vim/bundle/ag
 
 " set encoding UTF-8
 set encoding=utf-8
