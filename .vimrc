@@ -15,6 +15,9 @@ set wrap
 set linebreak
 set laststatus=2
 
+"yank to os clipboard
+set clipboard+=unnamed
+
 "UI
 set mouse=a
 
@@ -26,7 +29,6 @@ set history=1000
 
 set wildmenu
 set wildignore=*.scssc
-
 
 set showcmd
 set showmode
@@ -44,14 +46,14 @@ map <space> /
 map 0 ^
 
 " close buffer
-map <leader>bd :Bclose<cr>
+map <C-x> :bd<cr>
 
 "buffer control
 map <C-j> :bp<cr>
 map <C-k> :bn<cr>
 
 " remember info about open buffers on close
-set viminfo ^=%
+set viminfo^=%
 
 let mapleader = ","
 
@@ -96,7 +98,8 @@ call vundle#end()
 filetype plugin indent on
 
 " Ag
-let g:ag_prg='ag --column --ignore /wp-content/themes/digitaltrends-2014/assets/styles/css/'
+let g:ag_prg='ag --column --ignore-dir /wp-content/themes/digitaltrends-2014/assets/styles/css/'
+let g:ag_working_path_mode="r"
 
 " YCM Python
 let g:ycm_python_binary_path = '/usr/local/bin/python3'
