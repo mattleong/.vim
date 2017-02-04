@@ -68,15 +68,12 @@ call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/syntastic'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'kien/ctrlp.vim'
 Plugin 'bling/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'L9'
-Plugin 'tpope/vim-surround'
-Plugin 'raimondi/delimitmate'
 Plugin 'ap/vim-css-color'
 Plugin 'mattn/emmet-vim'
 Plugin 'dsawardekar/wordpress.vim'
@@ -86,7 +83,7 @@ Plugin 'shawncplus/phpcomplete.vim'
 Plugin 'Shougo/vimproc'
 Plugin 'Shougo/unite.vim'
 Plugin 'supertab'
-Plugin 'Valloric/YouCompleteMe'
+" Plugin 'Valloric/YouCompleteMe'
 Plugin 'tpope/vim-fugitive'
 Plugin 'rking/ag.vim'
 Plugin 'chriskempson/base16-vim'
@@ -100,14 +97,6 @@ filetype plugin indent on
 " Ag
 let g:ag_prg='ag --column --ignore-dir /wp-content/themes/digitaltrends-2014/assets/styles/css/'
 let g:ag_working_path_mode="r"
-
-" YCM Python
-let g:ycm_python_binary_path = '/usr/local/bin/python3'
-
-" Php Auto Complete Extended
-" SuperTab
-" autocmd FileType php setlocal omnifunc=phpcomplete_extended#CompletePHP
-let g:SuperTabDefaultCompletetionType = "<c-x><c-o>"
 
 " NERDTree
 " Autoopen
@@ -129,12 +118,10 @@ autocmd BufWritePre * :%s/\s\+$//e
 
 " Airline
 let g:airline#extensions#tabline#enabled = 1
-let g:airline_theme='base16_ocean'
+let g:airline_theme='raven'
 
 " Theme
-colorscheme base16-ocean
 let base16colorspace=256
-set background=dark
 
 " Ag
 set runtimepath^=~/.vim/bundle/ag
