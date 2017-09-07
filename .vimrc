@@ -21,22 +21,10 @@ set clipboard+=unnamed
 "UI
 set mouse=a
 
-set relativenumber
 set ruler
 set noswapfile
 set hidden
 set history=1000
-
-set wildmenu
-set wildignore=*.scssc
-
-set showcmd
-set showmode
-
-set t_Co=256
-set term=screen-256color
-
-set autoread
 
 "map space to search
 map <space> /
@@ -68,35 +56,19 @@ call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/syntastic'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'kien/ctrlp.vim'
 Plugin 'bling/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'L9'
-Plugin 'ap/vim-css-color'
 Plugin 'mattn/emmet-vim'
 Plugin 'dsawardekar/wordpress.vim'
-Plugin 'stanangeloff/php.vim'
-Plugin 'pangloss/vim-javascript'
-Plugin 'shawncplus/phpcomplete.vim'
-Plugin 'Shougo/vimproc'
 Plugin 'Shougo/unite.vim'
-Plugin 'supertab'
-" Plugin 'Valloric/YouCompleteMe'
-Plugin 'tpope/vim-fugitive'
-Plugin 'rking/ag.vim'
-Plugin 'chriskempson/base16-vim'
-Plugin 'ternjs/tern_for_vim'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'mhinz/vim-startify'
 
 call vundle#end()
 filetype plugin indent on
-
-" Ag
-let g:ag_prg='ag --column --ignore-dir /wp-content/themes/digitaltrends-2014/assets/styles/css/'
-let g:ag_working_path_mode="r"
 
 " NERDTree
 " Autoopen
@@ -121,24 +93,7 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline_theme='raven'
 
 " Theme
-let base16colorspace=256
-
-" Ag
-set runtimepath^=~/.vim/bundle/ag
 
 " set encoding UTF-8
 set encoding=utf-8
 set fileencoding=utf-8
-
-" php.vim
-" g:php_syntax_extensions_enabled
-" b:php_syntax_extensions_enabled
-function! PhpSyntaxOverride()
-    hi! def link phpDocTags phpDefine
-    hi! def link phpDocParam phpType
-endfunction
-
-augroup phpSyntaxOverride()
-    autocmd!
-    autocmd FileType php call PhpSyntaxOverride()
-augroup END
