@@ -1,7 +1,5 @@
 " Editor
-syntax on
-
-" edit
+syntax enable
 set number
 set autoindent
 set smartindent
@@ -11,13 +9,11 @@ set softtabstop=4
 set shiftwidth=4
 set tabstop=4
 set backspace=eol,start,indent
-set wrap
-set linebreak
 set laststatus=2
-
+set encoding=utf-8
+set fileencoding=utf-8
 "yank to os clipboard
 set clipboard+=unnamed
-
 "UI
 set mouse=a
 
@@ -28,7 +24,6 @@ set history=1000
 
 "map space to search
 map <space> /
-" set incsearch
 
 " first non-blank space char
 map 0 ^
@@ -43,57 +38,68 @@ map <C-k> :bn<cr>
 " remember info about open buffers on close
 set viminfo^=%
 
+set number
+set relativenumber
+
 let mapleader = ","
 
-inoremap jj <ESC><CR>
+inoremap jj <ESC>
+set cursorline
+
+" fix black bg bug
+" https://superuser.com/questions/457911/in-vim-background-color-changes-on-scrolling
+"if &term =~ '256color'
+
 
 " Vundle
 set nocompatible
 filetype off
-
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'scrooloose/nerdtree'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'airblade/vim-gitgutter'
-Plugin 'kien/ctrlp.vim'
 Plugin 'bling/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'L9'
-Plugin 'mattn/emmet-vim'
-Plugin 'dsawardekar/wordpress.vim'
-Plugin 'Shougo/unite.vim'
-Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'mhinz/vim-startify'
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'lifepillar/vim-solarized8'
+Plugin 'othree/yajs.vim'
+Plugin 'mxw/vim-jsx'
+Plugin 'ap/vim-css-color'
+Plugin 'Raimondi/delimitMate'
+Plugin 'elzr/vim-json'
+Plugin 'othree/vim-autocomplpop'
 
 call vundle#end()
 filetype plugin indent on
 
-" NERDTree
-" Autoopen
-" autocmd vimenter * NERDTree
+let g:jsx_ext_required = 0
+
 let NERDTreeShowHidden=1
+
 "Toggle on CTRL-n
 map <C-n> :NERDTreeToggle<CR>
 
-" Unite buffer mapping
-nnoremap <C-m> :Unite buffer<cr>
-
 " CtrlP remapping for dt
 noremap <C-a> :CtrlP<CR>
-let g:ctrlp_cmd=':CtrlP ~/Dev/dt_local/docker/projects/dt/web/digitaltrends/current/wp-content/themes/'
 let g:ctrlp_show_hidden=1
 
 " Remove trailing whitespaces
 autocmd BufWritePre * :%s/\s\+$//e
 
 " Airline
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_theme='raven'
+let g:airline_powerline_fonts=1
+let g:airline_theme='solarized'
 
 " Theme
+if (has("termguicolors"))
+  set termguicolors
+endif
 
-" set encoding UTF-8
-set encoding=utf-8
-set fileencoding=utf-8
+set background=dark
+let g:solarized_termcolors=256
+colorscheme solarized8_dark
