@@ -10,6 +10,7 @@ set shiftwidth=4
 set tabstop=4
 set backspace=eol,start,indent
 set laststatus=2
+set nowrap
 set encoding=utf-8
 set fileencoding=utf-8
 "yank to os clipboard
@@ -66,18 +67,22 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'L9'
 Plugin 'mhinz/vim-startify'
 Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'lifepillar/vim-solarized8'
-Plugin 'othree/yajs.vim'
 Plugin 'mxw/vim-jsx'
 Plugin 'ap/vim-css-color'
 Plugin 'Raimondi/delimitMate'
 Plugin 'elzr/vim-json'
-Plugin 'othree/vim-autocomplpop'
+" Plugin 'othree/vim-autocomplpop'
+Plugin 'pangloss/vim-javascript'
+Plugin 'arcticicestudio/nord-vim'
 
 call vundle#end()
 filetype plugin indent on
 
-let g:jsx_ext_required = 0
+" vim-javascript
+let g:javascript_plugin_jsdoc = 1
+let g:javascript_conceal_null                 = "ø"
+let g:javascript_conceal_arrow_function       = "⇒"
+set conceallevel=1
 
 let NERDTreeShowHidden=1
 
@@ -92,14 +97,12 @@ let g:ctrlp_show_hidden=1
 autocmd BufWritePre * :%s/\s\+$//e
 
 " Airline
-let g:airline_powerline_fonts=1
-let g:airline_theme='solarized'
+let g:airline_theme='nord'
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
 
-" Theme
-if (has("termguicolors"))
-  set termguicolors
-endif
-
-set background=dark
-let g:solarized_termcolors=256
-colorscheme solarized8_dark
+" themes
+set termguicolors " 24-bit terminal
+let g:nord_italic_comments = 1
+let g:nord_comment_brightness = 12
+color nord
