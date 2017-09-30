@@ -13,15 +13,36 @@ set laststatus=2
 set nowrap
 set encoding=utf-8
 set fileencoding=utf-8
+" highlight all search matches after search is complete
+set hlsearch
+" ignore case when searching
+set ignorecase
+" override ignorecase if the search pattern contains upper case characters
+set smartcase
 "yank to os clipboard
 set clipboard+=unnamed
 "UI
 set mouse=a
+" do all work in memory, no swap file
+set noswapfile
 
 set ruler
 set noswapfile
 set hidden
 set history=1000
+
+" Remove trailing whitespaces
+autocmd BufWritePre * :%s/\s\+$//e
+
+set tags=./tags,/home/matt/dev/dt_local/src/websites/www.digitaltrends.com/tags
+
+" treat `$` as part of the word in PHP and JavaScript
+au Filetype php        setlocal iskeyword+=$
+au Filetype javascript setlocal iskeyword+=$
+"
+" " treat `.`, and `#`  as part of the word in CSS and SCSS
+au Filetype css  setlocal iskeyword+=.,#
+au Filetype scss setlocal iskeyword+=.,#
 
 "map space to search
 map <space> /
@@ -40,21 +61,14 @@ map <C-k> :bn<cr>
 set viminfo^=%
 
 set number
-set relativenumber
 
 let mapleader = ","
 
 inoremap jj <ESC>
 set cursorline
 
-" fix black bg bug
-" https://superuser.com/questions/457911/in-vim-background-color-changes-on-scrolling
-"if &term =~ '256color'
-
-
 " Vundle
 set nocompatible
-filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
@@ -71,18 +85,29 @@ Plugin 'mxw/vim-jsx'
 Plugin 'ap/vim-css-color'
 Plugin 'Raimondi/delimitMate'
 Plugin 'elzr/vim-json'
-" Plugin 'othree/vim-autocomplpop'
-Plugin 'pangloss/vim-javascript'
+Plugin 'Yggdroot/indentLine'
+Plugin 'StanAngeloff/php.vim'
 Plugin 'arcticicestudio/nord-vim'
+Plugin 'cakebaker/scss-syntax.vim'
+Plugin 'othree/yajs.vim'
+Plugin 'othree/jspc.vim'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'lvht/phpcd.vim'
+Plugin 'othree/html5.vim'
+Plugin 'w0rp/ale'
+Plugin 'salcode/vim-wordpress-dict'
 
 call vundle#end()
 filetype plugin indent on
 
+"autocmd FileType php setlocal omnifunc=phpcomplete#CompletePHP
+"set completeopt=longest,menuone
+let php_htmlInStrings=1
+
+let g:gitgutter_max_signs = 2000  " default value
+
 " vim-javascript
 let g:javascript_plugin_jsdoc = 1
-let g:javascript_conceal_null                 = "ø"
-let g:javascript_conceal_arrow_function       = "⇒"
-set conceallevel=1
 
 let NERDTreeShowHidden=1
 
@@ -93,8 +118,10 @@ map <C-n> :NERDTreeToggle<CR>
 noremap <C-a> :CtrlP<CR>
 let g:ctrlp_show_hidden=1
 
-" Remove trailing whitespaces
-autocmd BufWritePre * :%s/\s\+$//e
+
+if has('termguicolors')
+    set termguicolors
+endif
 
 " Airline
 let g:airline_theme='nord'
