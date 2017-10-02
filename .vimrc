@@ -3,11 +3,21 @@ syntax enable
 
 " Update files written to outside of vim
 set autoread
+
+" remember info about open buffers on close
+set viminfo^=%
+
+" Encodings
+set encoding=utf-8
+set fileencoding=utf-8
+
 " Line numbers
 set number
+
 " Indentation
 set autoindent
 set smartindent
+
 " Tabs
 set expandtab
 set tabstop=4
@@ -16,25 +26,31 @@ set shiftwidth=4
 set tabstop=4
 set backspace=eol,start,indent
 set laststatus=2
+
 " Don't wrap text
 set nowrap
-" ignore files
-set wildignore=tmp/**,dist/**,node_modules/**
-" Command-line completion in an enhanced mode
-set wildmenu
-" Encodings
-set encoding=utf-8
-set fileencoding=utf-8
+
+" Search
+set wildignore=node_modules,vendor
+
 " highlight all search matches after search is complete
 set hlsearch
+
+" Command-line completion in an enhanced mode
+set wildmenu
+
 " ignore case when searching
 set ignorecase
+
 " override ignorecase if the search pattern contains upper case characters
 set smartcase
+
 "yank to os clipboard
 set clipboard^=unnamed
+
 "UI
 set mouse=a
+
 " do all work in memory, no swap file
 set noswapfile
 set ruler
@@ -44,94 +60,130 @@ set history=1000
 " Remove trailing whitespaces
 autocmd BufWritePre * :%s/\s\+$//e
 
+" Tags
 set tags=./tags
 set tags+=/home/matt/dev/dt_local/src/websites/www.digitaltrends.com/tags
 
 " treat `$` as part of the word in PHP and JavaScript
 au Filetype php        setlocal iskeyword+=$
 au Filetype javascript setlocal iskeyword+=$
-"
-" " treat `.`, and `#`  as part of the word in CSS and SCSS
+
+" treat `.`, and `#`  as part of the word in CSS and SCSS
 au Filetype css  setlocal iskeyword+=.,#
 au Filetype scss setlocal iskeyword+=.,#
 
-" first non-blank space char
-map 0 ^
-
-" close buffer
-map <C-x> :bd<cr>
-
-"buffer control
-map <C-j> :bp<cr>
-map <C-k> :bn<cr>
-
-" remember info about open buffers on close
-set viminfo^=%
-
+" Line numbers
 set number
 
+" Remap leader
 let mapleader = ","
 
-inoremap jj <ESC>
+" NAVIGATION
 set cursorline
+inoremap jj <ESC>
+
+" Autocomplete
+set completeopt=menu,menuone,longest
+
+" first non-blank space char
+map 0 ^
+" close buffer
+map <C-x> :bd<cr>
+" buffer control
+map <C-l> :bp<cr>
+map <C-;> :bn<cr>
+" tab control
+map <C-j> :tabp<cr>
+map <C-k> :tabn<cr>
+map <C-i> :tabnew<cr>
 
 " Vundle
 set nocompatible
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
+" Main
+Plugin 'L9'
 Plugin 'VundleVim/Vundle.vim'
+
+" Navigation
+Plugin 'mhinz/vim-startify'
 Plugin 'scrooloose/nerdtree'
+Plugin 'ctrlpvim/ctrlp.vim'
+
+" Code stuff
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'airblade/vim-gitgutter'
-Plugin 'bling/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'L9'
-Plugin 'mhinz/vim-startify'
-Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'mxw/vim-jsx'
 Plugin 'ap/vim-css-color'
 Plugin 'Raimondi/delimitMate'
-Plugin 'elzr/vim-json'
 Plugin 'Yggdroot/indentLine'
-Plugin 'StanAngeloff/php.vim'
 Plugin '1995eaton/vim-better-javascript-completion'
-Plugin 'ervandew/supertab'
-Plugin 'shawncplus/phpcomplete.vim'
+
+" Autocomplete
 Plugin 'Shougo/neocomplete.vim'
-Plugin 'othree/vim-autocomplpop'
-Plugin 'othree/html5.vim'
-Plugin 'w0rp/ale'
-Plugin 'mileszs/ack.vim'
+Plugin 'ervandew/supertab'
+
+" PHP
+Plugin 'shawncplus/phpcomplete.vim'
+Plugin 'StanAngeloff/php.vim'
+Plugin 'dsawardekar/wordpress.vim'
 Plugin 'salcode/vim-wordpress-dict'
+
+" Linting
+Plugin 'w0rp/ale'
+
+" Search
+Plugin 'mileszs/ack.vim'
+
+" Theme
 Plugin 'arcticicestudio/nord-vim'
+Plugin 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 
 call vundle#end()
 filetype plugin indent on
 
 " Supertab
-let g:SuperTabDefaultCompletionType = "context"
+let g:SuperTabDefaultCompletionType = "<c-n>"
 
 " Gitgutter
-let g:gitgutter_max_signs = 1000
+let g:gitgutter_max_signs = 3000
 
 " Ale
 let g:airline#extensions#ale#enabled = 1
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_completion_enabled = 1
+
+" CtrlP
+let g:ctrlp_show_hidden = 1
+let g:ctrlp_max_files = 0
+let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_custom_ignore = '(node_modules|vendor)'
 
 " Neocomplete
 let g:neocomplete#enable_auto_select = 1
 let g:neocomplete#enable_at_startup = 1
 let g:neocomplete#enable_smart_case = 1
 let g:neocomplete#sources#syntax#min_keyword_length = 3
+
+" Define keyword.
+if !exists('g:neocomplete#keyword_patterns')
+    let g:neocomplete#keyword_patterns = {}
+endif
+let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
 " Enable heavy omni completion.
 if !exists('g:neocomplete#sources#omni#input_patterns')
     let g:neocomplete#sources#omni#input_patterns = {}
 endif
-let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+
+let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\|\h\w*::\|\(new\|use\|extends\|implements\)\s'
 let g:neocomplete#sources#omni#input_patterns.javascript = '[a-zA-Z_$]\{3,}\|\.[a-zA-Z_$]*'
 
 " PHPcompletetion
@@ -139,23 +191,21 @@ autocmd FileType php setlocal omnifunc=phpcomplete#CompletePHP
 let g:phpcomplete_parse_docblock_comments = 1
 
 " NERDTree
-let NERDTreeShowHidden=1
+let NERDTreeShowHidden = 1
+
 "Toggle on CTRL-n
 map <C-n> :NERDTreeToggle<CR>
-
-" CtrlP
-let g:ctrlp_show_hidden=1
 
 " Theme
 if has('termguicolors')
     set termguicolors
 endif
 
+let g:nord_italic_comments = 1
+color nord
+
 " Airline
 let g:airline_theme='nord'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 
-" themes
-let g:nord_italic_comments = 1
-color nord
