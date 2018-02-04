@@ -14,12 +14,15 @@ set fileencoding=utf-8
 " Line numbers
 set number
 
+" userelative line numbers
+set rnu
+
 " Indentation
 set autoindent
 set smartindent
 
 " Tabs
-set expandtab
+set noexpandtab
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
@@ -27,11 +30,11 @@ set tabstop=4
 set backspace=eol,start,indent
 set laststatus=2
 
+" Ignore files
+set wildignore+=*/node_modules/*,*.scssc,*/wp-includes/*,*/wp-admin/*,*/vendor/*
+
 " Don't wrap text
 set nowrap
-
-" Search
-set wildignore=node_modules,vendor
 
 " highlight all search matches after search is complete
 set hlsearch
@@ -46,7 +49,7 @@ set ignorecase
 set smartcase
 
 "yank to os clipboard
-set clipboard^=unnamed
+set clipboard=unnamedplus
 
 "UI
 set mouse=a
@@ -82,6 +85,16 @@ let mapleader = ","
 set cursorline
 inoremap jj <ESC>
 
+" When editing a file, always jump to the last known cursor position.
+" Don't do it when the position is invalid or when inside an event handler
+" (happens when dropping a file on gvim).
+autocmd BufReadPost *
+\ if line("'\"") >= 1 && line("'\"") <= line("$") |
+\   exe "normal! g`\"" |
+\ endif
+
+augroup END
+
 " Autocomplete
 set completeopt=menu,menuone,longest
 
@@ -90,12 +103,8 @@ map 0 ^
 " close buffer
 map <C-x> :bd<cr>
 " buffer control
-map <C-l> :bp<cr>
-map <C-;> :bn<cr>
-" tab control
-map <C-j> :tabp<cr>
-map <C-k> :tabn<cr>
-map <C-i> :tabnew<cr>
+map <C-j> :bp<cr>
+map <C-k> :bn<cr>
 
 " Vundle
 set nocompatible
@@ -119,6 +128,7 @@ Plugin 'ap/vim-css-color'
 Plugin 'Raimondi/delimitMate'
 Plugin 'Yggdroot/indentLine'
 Plugin '1995eaton/vim-better-javascript-completion'
+Plugin 'pangloss/vim-javascript'
 
 " Autocomplete
 Plugin 'Shougo/neocomplete.vim'
@@ -138,6 +148,7 @@ Plugin 'mileszs/ack.vim'
 
 " Theme
 Plugin 'arcticicestudio/nord-vim'
+Plugin 'liuchengxu/space-vim-dark'
 Plugin 'bling/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 
@@ -159,7 +170,7 @@ let g:ale_completion_enabled = 1
 let g:ctrlp_show_hidden = 1
 let g:ctrlp_max_files = 0
 let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_custom_ignore = '(node_modules|vendor)'
+let g:ctrlp_custom_ignore = '*/node_modules/*\|*/wp-includes/*\|*/vendor/*'
 
 " Neocomplete
 let g:neocomplete#enable_auto_select = 1
@@ -202,10 +213,56 @@ if has('termguicolors')
 endif
 
 let g:nord_italic_comments = 1
-color nord
+"color nord
+"color space-vim
 
 " Airline
-let g:airline_theme='nord'
+"let g:airline_theme='nord'
+let g:airline_theme='space-vim'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 
+"                                           _
+"       ___ _ __   __ _  ___ ___     __   _(_)_ __ ___
+"      / __| -_ \ / _- |/ __/ _ \____\ \ / / | -_ - _ \
+"      \__ \ |_) | (_| | (_|  __/_____\ V /| | | | | | |
+"      |___/ .__/ \__._|\___\___|      \_/ |_|_| |_| |_|
+"          |_|
+"
+"   Copyright (c) 2017 Liu-Cheng Xu & Contributors
+"
+"   You can customize space-vim with .spacevim
+"   and don't have to take care of this file.
+"
+"   Author: Liu-Cheng Xu <xuliuchengxlc@gmail.com>
+"   URL: https://github.com/liuchengxu/space-vim
+"   License: MIT
+
+scriptencoding utf-8
+
+" Identify platform {
+let g:MAC = has('macunix')
+let g:LINUX = has('unix') && !has('macunix') && !has('win32unix')
+let g:WINDOWS = has('win32') || has('win64')
+" }
+
+" Windows Compatible {
+" On Windows, also use '.vim' instead of 'vimfiles'; this makes synchronization
+" across (heterogeneous) systems easier.
+if g:WINDOWS
+  set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/.vim/after
+endif
+" }
+
+let g:spacevim_dir = $HOME.'/.space-vim'
+let g:spacevim_core_dir = '/core'
+let g:spacevim_version = '0.7.0'
+
+set runtimepath+=$HOME/.space-vim/core
+
+call spacevim#begin()
+
+Layer 'spacevim'
+Layer 'airline'
+
+call spacevim#end()
