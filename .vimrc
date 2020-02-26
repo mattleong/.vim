@@ -15,7 +15,7 @@ set fileencoding=utf-8
 set number
 
 " userelative line numbers
-set rnu
+" set rnu
 
 " Indentation
 set autoindent
@@ -123,12 +123,6 @@ Plugin 'ctrlpvim/ctrlp.vim'
 " Code stuff
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'airblade/vim-gitgutter'
-Plugin 'mxw/vim-jsx'
-Plugin 'ap/vim-css-color'
-Plugin 'Raimondi/delimitMate'
-Plugin 'Yggdroot/indentLine'
-Plugin '1995eaton/vim-better-javascript-completion'
-Plugin 'pangloss/vim-javascript'
 
 " Autocomplete
 Plugin 'Shougo/neocomplete.vim'
@@ -136,19 +130,15 @@ Plugin 'ervandew/supertab'
 
 " PHP
 Plugin 'shawncplus/phpcomplete.vim'
-Plugin 'StanAngeloff/php.vim'
-Plugin 'dsawardekar/wordpress.vim'
-Plugin 'salcode/vim-wordpress-dict'
 
 " Linting
-Plugin 'w0rp/ale'
+" Plugin 'w0rp/ale'
 
 " Search
 Plugin 'mileszs/ack.vim'
 
 " Theme
 Plugin 'arcticicestudio/nord-vim'
-Plugin 'liuchengxu/space-vim-dark'
 Plugin 'bling/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 
@@ -162,9 +152,6 @@ let g:SuperTabDefaultCompletionType = "<c-n>"
 let g:gitgutter_max_signs = 3000
 
 " Ale
-let g:airline#extensions#ale#enabled = 1
-let g:ale_lint_on_text_changed = 'never'
-let g:ale_completion_enabled = 1
 
 " CtrlP
 let g:ctrlp_show_hidden = 1
@@ -212,57 +199,12 @@ if has('termguicolors')
     set termguicolors
 endif
 
-let g:nord_italic_comments = 1
-"color nord
+" let g:nord_italic_comments = 1
+color nord
 "color space-vim
 
 " Airline
-"let g:airline_theme='nord'
-let g:airline_theme='space-vim'
+let g:airline_theme='nord'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 
-"                                           _
-"       ___ _ __   __ _  ___ ___     __   _(_)_ __ ___
-"      / __| -_ \ / _- |/ __/ _ \____\ \ / / | -_ - _ \
-"      \__ \ |_) | (_| | (_|  __/_____\ V /| | | | | | |
-"      |___/ .__/ \__._|\___\___|      \_/ |_|_| |_| |_|
-"          |_|
-"
-"   Copyright (c) 2017 Liu-Cheng Xu & Contributors
-"
-"   You can customize space-vim with .spacevim
-"   and don't have to take care of this file.
-"
-"   Author: Liu-Cheng Xu <xuliuchengxlc@gmail.com>
-"   URL: https://github.com/liuchengxu/space-vim
-"   License: MIT
-
-scriptencoding utf-8
-
-" Identify platform {
-let g:MAC = has('macunix')
-let g:LINUX = has('unix') && !has('macunix') && !has('win32unix')
-let g:WINDOWS = has('win32') || has('win64')
-" }
-
-" Windows Compatible {
-" On Windows, also use '.vim' instead of 'vimfiles'; this makes synchronization
-" across (heterogeneous) systems easier.
-if g:WINDOWS
-  set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/.vim/after
-endif
-" }
-
-let g:spacevim_dir = $HOME.'/.space-vim'
-let g:spacevim_core_dir = '/core'
-let g:spacevim_version = '0.7.0'
-
-set runtimepath+=$HOME/.space-vim/core
-
-call spacevim#begin()
-
-Layer 'spacevim'
-Layer 'airline'
-
-call spacevim#end()
